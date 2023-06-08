@@ -1,65 +1,154 @@
-pub mod button;
-pub mod label;
-pub mod level;
-pub mod form;
-pub mod icon;
-pub mod text;
-pub mod color;
-pub mod error;
-
-pub use button::Button;
-pub use level::Level;
-pub use icon::{Icon, IconText};
-pub use form::{checkbox::Checkbox, control::Control, field::Field, input::Input, select::Select};
-pub use label::Label;
-pub use text::Text;
-pub use color::Color;
-
-/* this helper should be available on all classes */
-#[derive(Debug, Clone, Copy)]
-pub enum Visibility {
-    HiddenMobile,
-    HiddenTabletOnly,
-    HiddenDesktopOnly,
-    HiddenWidescreenOnly,
-    HiddenTouch,
-    HiddenTablet,
-    HiddenDesktop,
-    HiddenWidescreen,
-    HiddenFullHd
+#[macro_export]
+macro_rules! columns {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("div" => web_sys::HtmlDivElement, {
+            .class("columns")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
 }
 
-impl Visibility {
-    fn as_class(&self) -> &'static str {
-        match self {
-            Visibility::HiddenMobile => "is-hidden-mobile",
-            Visibility::HiddenTabletOnly => "is-hidden-tablet-only",
-            Visibility::HiddenDesktopOnly => "is-hidden-desktop-only",
-            Visibility::HiddenWidescreenOnly => "is-hidden-widescreen-only",
-            Visibility::HiddenTouch => "is-hidden-touch",
-            Visibility::HiddenTablet => "is-hidden-tablet",
-            Visibility::HiddenDesktop => "is-hidden-desktop",
-            Visibility::HiddenWidescreen => "is-hidden-widescreen",
-            Visibility::HiddenFullHd => "is-hidden-fullhd",
-        }
-    }
+#[macro_export]
+macro_rules! column {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("div" => web_sys::HtmlDivElement, {
+            .class("column")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
 }
 
-#[derive(Debug, Clone, Copy)]
-pub enum Size {
-    Small,
-    Normal,
-    Medium,
-    Large,
+#[macro_export]
+macro_rules! section {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("section" => web_sys::HtmlElement, {
+            .class("section")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
 }
 
-impl Size {
-    fn as_class(&self) -> &'static str {
-        match self {
-            Size::Small => "is-small",
-            Size::Normal => "is-normal",
-            Size::Medium => "is-medium",
-            Size::Large => "is-large",
-        }
-    }
+#[macro_export]
+macro_rules! container {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("div" => web_sys::HtmlDivElement, {
+            .class("container")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
 }
+
+#[macro_export]
+macro_rules! level {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("nav" => web_sys::HtmlElement, {
+            .class("level")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
+}
+
+#[macro_export]
+macro_rules! image {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("figure" => web_sys::HtmlElement, {
+            .class("image")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
+}
+
+#[macro_export]
+macro_rules! icon {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("span" => web_sys::HtmlSpanElement, {
+            .class("icon")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
+}
+
+#[macro_export]
+macro_rules! button {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("button" => web_sys::HtmlButtonElement, {
+            .class("button")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
+}
+
+#[macro_export]
+macro_rules! level_left {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("div" => web_sys::HtmlDivElement, {
+            .class("level-left")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
+}
+
+#[macro_export]
+macro_rules! level_right {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("div" => web_sys::HtmlDivElement, {
+            .class("level-left")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
+}
+
+#[macro_export]
+macro_rules! level_item {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("div" => web_sys::HtmlDivElement, {
+            .class("level-item")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
+}
+
+// To consider (develop rustify.be first -- DEVELOPMENT DRIVEN DEVELOPMENT):
+// Advantages: less chances of invalid config
+// disadvantages: for this level of complexity I should probably use a proc macro
+// level!("is-mobile", {
+//     .left!({
+//         .item!(html!("p", {
+//             .text("left")
+//         }))
+//         .item_signal!(html!("p", {
+//             .text("side")
+//         }))
+//         .items!(html!("p", {
+//             .text("side")
+//         }))
+//         .items_signal_vec!(html!("p", {
+//             .text("side")
+//         }))
+//     }),
+//     .right!({
+//         .item!(html!("p", {
+//             .text("right")
+//         }))
+//         .item!(html!("p", {
+//             .text("side")
+//         }))
+//     }),
+// });
+
+// columns!("is-mobile", "", {
+//     .column_signal_vec!()       
+//     .column!(["is-2"], {
+//     }),
+// });
