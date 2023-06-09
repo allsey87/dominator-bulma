@@ -1,3 +1,6 @@
+pub mod components;
+pub mod form;
+
 #[macro_export]
 macro_rules! columns {
     ($($classes:literal,)* { $($methods:tt)* }) => {
@@ -76,10 +79,32 @@ macro_rules! icon {
 }
 
 #[macro_export]
+macro_rules! tag {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("span" => web_sys::HtmlSpanElement, {
+            .class("tag")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
+}
+
+#[macro_export]
 macro_rules! button {
     ($($classes:literal,)* { $($methods:tt)* }) => {
         dominator::html!("button" => web_sys::HtmlButtonElement, {
             .class("button")
+            $(.class($classes))*
+            $($methods)*
+        })
+    };
+}
+
+#[macro_export]
+macro_rules! content {
+    ($($classes:literal,)* { $($methods:tt)* }) => {
+        dominator::html!("div" => web_sys::HtmlDivElement, {
+            .class("content")
             $(.class($classes))*
             $($methods)*
         })
