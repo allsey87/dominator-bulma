@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use dominator::{html, Dom, clone, events, DomBuilder};
 use futures_signals::signal::Mutable;
 
